@@ -1,34 +1,45 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.Department;
+import com.example.demo.model.DepartmentEntity;
 import com.example.demo.repository.DepartmentRepository;
 import com.example.demo.service.DepartmentService;
-import java.util.*;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class DepartmentServiceImpl implements DepartmentService {
 
-    private final DepartmentRepository repo;
+    private final DepartmentRepository repository;
 
-    public DepartmentServiceImpl(DepartmentRepository repo) {
-        this.repo = repo;
+    public DepartmentServiceImpl(DepartmentRepository repository) {
+        this.repository = repository;
     }
 
-    public Department create(Department d) {
-        if (repo.existsByName(d.getName()))
+    @Override
+    public DepartmentEntity create(DepartmentEntity department) {
+        if (repository.existsByName(department.getName())) {
             throw new RuntimeException("exists");
-        return repo.save(d);
+        }
+        return repository.save(department);
     }
 
-    public Department get(Long id) {
-        return repo.findById(id)
+    @Override
+    public DepartmentEntity get(Long id) {
+        return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("not found"));
     }
 
-    public void delete(Long id) {
-        repo.delete(get(id));
+    @Override
+    public List<DepartmentEntity> getAll() {
+        return repository.findAll();
     }
 
-    public List<Department> getAll() {
-        return repo.findAll();
+    @Override
+    public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new RuntimeException("not found");
+        }
+        repository.deleteById(id);
     }
 }

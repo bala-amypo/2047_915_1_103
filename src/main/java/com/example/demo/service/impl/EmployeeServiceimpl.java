@@ -1,46 +1,48 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.Employee;
+import com.example.demo.model.EmployeeEntity;
 import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.service.EmployeeService;
-import java.util.*;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private final EmployeeRepository repo;
+    private final EmployeeRepository repository;
 
-    public EmployeeServiceImpl(EmployeeRepository repo) {
-        this.repo = repo;
+    public EmployeeServiceImpl(EmployeeRepository repository) {
+        this.repository = repository;
     }
 
-    public Employee createEmployee(Employee e) {
-        if (repo.existsByEmail(e.getEmail()))
+    @Override
+    public EmployeeEntity create(EmployeeEntity employee) {
+        if (repository.existsByEmail(employee.getEmail())) {
             throw new RuntimeException("exists");
-        if (e.getMaxWeeklyHours() <= 0)
+        }
+        if (employee.getMaxWeeklyHours() <= 0) {
             throw new RuntimeException("must");
-        return repo.save(e);
+        }
+        return repository.save(employee);
     }
 
-    public Employee getEmployee(Long id) {
-        return repo.findById(id)
+    @Override
+    public EmployeeEntity get(Long id) {
+        return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("not found"));
     }
 
-    public Employee updateEmployee(Long id, Employee e) {
-        Employee old = getEmployee(id);
-        old.setFullName(e.getFullName());
-        return repo.save(old);
+    @Override
+    public List<EmployeeEntity> getAll() {
+        return repository.findAll();
     }
 
-    public void deleteEmployee(Long id) {
-        repo.delete(getEmployee(id));
-    }
-
-    public List<Employee> getAll() {
-        return repo.findAll();
-    }
-
-    public Employee findByEmail(String email) {
-        return repo.findByEmail(email).orElseThrow();
+    @Override
+    public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new RuntimeException("not found");
+        }
+        repository.deleteById(id);
     }
 }
