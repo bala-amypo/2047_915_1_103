@@ -1,60 +1,32 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
+import java.time.*;
 
 @Entity
 public class EmployeeAvailability {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @ManyToOne
     private Employee employee;
 
     private LocalDate availableDate;
-
     private Boolean available = true;
 
-    public EmployeeAvailability() {
+    public EmployeeAvailability() {}
+
+    public EmployeeAvailability(Employee e, LocalDate d, Boolean a) {
+        this.employee = e;
+        this.availableDate = d;
+        this.available = a;
     }
 
-    public EmployeeAvailability(Employee employee, LocalDate availableDate, Boolean available) {
-        this.employee = employee;
-        this.availableDate = availableDate;
-        this.available = available;
-    }
-
-    public Long getId() {
-        return id;
-    }
- 
-    public void setId(Long id) {
-        this.id = id;
-    }
- 
-    public Employee getEmployee() {
-        return employee;
-    }
- 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
- 
-    public LocalDate getAvailableDate() {
-        return availableDate;
-    }
- 
-    public void setAvailableDate(LocalDate availableDate) {
-        this.availableDate = availableDate;
-    }
- 
-    public Boolean getAvailable() {
-        return available;
-    }
- 
-    public void setAvailable(Boolean available) {
-        this.available = available;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public Employee getEmployee() { return employee; }
+    public Boolean getAvailable() { return available; }
+    public void setAvailable(Boolean a) { this.available = a; }
 }

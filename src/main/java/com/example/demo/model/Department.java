@@ -1,70 +1,34 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.util.*;
 
 @Entity
 public class Department {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
-    @Column(unique = true)
     private String name;
-
     private String description;
-
     private String requiredSkills;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    public Department() {}
 
-    public Department() {
-    }
-
-    public Department(String name, String description, String requiredSkills) {
+    public Department(String name, String description, String skills) {
         this.name = name;
         this.description = description;
-        this.requiredSkills = requiredSkills;
+        this.requiredSkills = skills;
     }
 
-    public Long getId() {
-        return id;
+    public Set<String> getRequiredSkills() {
+        if (requiredSkills == null) return Set.of();
+        return new HashSet<>(Arrays.asList(requiredSkills.split(",")));
     }
- 
-    public void setId(Long id) {
-        this.id = id;
-    }
- 
-    public String getName() {
-        return name;
-    }
- 
-    public void setName(String name) {
-        this.name = name;
-    }
- 
-    public String getDescription() {
-        return description;
-    }
- 
-    public void setDescription(String description) {
-        this.description = description;
-    }
- 
-    public String getRequiredSkills() {
-        return requiredSkills;
-    }
- 
-    public void setRequiredSkills(String requiredSkills) {
-        this.requiredSkills = requiredSkills;
-    }
- 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
- 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getName() { return name; }
+    public String getDescription() { return description; }
 }
