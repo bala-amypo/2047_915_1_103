@@ -23,13 +23,14 @@ public class AuthController {
     @PostMapping("/register")
     @Operation(summary = "Register a new user")
     public ResponseEntity<User> register(@RequestBody User user) {
-        User savedUser = userService.register(user);
+        User savedUser = userService.register(user); // Make sure register() exists in UserService
         return ResponseEntity.ok(savedUser);
     }
 
     @PostMapping("/login")
     @Operation(summary = "Login user and return JWT token")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
+        // Make sure UserService has a login(email, password) method returning a JWT token
         String token = userService.login(request.getEmail(), request.getPassword());
         return ResponseEntity.ok(new AuthResponse(token));
     }
