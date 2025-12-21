@@ -1,47 +1,39 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Department;
+import com.example.demo.model.DepartmentEntity;
 import com.example.demo.service.DepartmentService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/departments")
-@Tag(name = "Departments Endpoints")
 public class DepartmentController {
 
-    private final DepartmentService departmentService;
+    private final DepartmentService service;
 
-    public DepartmentController(DepartmentService departmentService) {
-        this.departmentService = departmentService;
+    public DepartmentController(DepartmentService service) {
+        this.service = service;
     }
 
     @PostMapping
-    @Operation(summary = "Create a new department")
-    public ResponseEntity<Department> create(@RequestBody Department department) {
-        return ResponseEntity.ok(departmentService.create(department));
-    }
-
-    @GetMapping
-    @Operation(summary = "Get all departments")
-    public ResponseEntity<List<Department>> getAll() {
-        return ResponseEntity.ok(departmentService.getAll());
+    public DepartmentEntity create(@RequestBody DepartmentEntity department) {
+        return service.create(department);
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get department by ID")
-    public ResponseEntity<Department> get(@PathVariable Long id) {
-        return ResponseEntity.ok(departmentService.get(id));
+    public DepartmentEntity get(@PathVariable Long id) {
+        return service.get(id);
+    }
+
+    @GetMapping
+    public List<DepartmentEntity> getAll() {
+        return service.getAll();
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete department by ID")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
-        departmentService.delete(id);
-        return ResponseEntity.ok("Deleted");
+    public String delete(@PathVariable Long id) {
+        service.delete(id);
+        return "Deleted";
     }
 }
