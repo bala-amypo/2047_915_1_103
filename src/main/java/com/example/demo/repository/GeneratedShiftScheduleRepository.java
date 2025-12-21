@@ -1,12 +1,12 @@
 package com.example.demo.repository;
 
-import com.example.demo.model.GeneratedShiftSchedule;
 import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.demo.model.GeneratedShiftSchedule;
+import java.time.*;
+import java.util.*;
 
-import java.time.LocalDate;
-import java.util.List;
-
-public interface GeneratedShiftScheduleRepository extends JpaRepository<GeneratedShiftSchedule, Long> {
+public interface GeneratedShiftScheduleRepository
+        extends JpaRepository<GeneratedShiftSchedule,Long> {
 
     List<GeneratedShiftSchedule> findByShiftDate(LocalDate date);
 }

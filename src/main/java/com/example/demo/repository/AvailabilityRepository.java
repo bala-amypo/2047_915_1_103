@@ -1,17 +1,12 @@
 package com.example.demo.repository;
 
-import com.example.demo.model.EmployeeAvailability;
 import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.demo.model.EmployeeAvailability;
+import java.time.*;
+import java.util.*;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-
-public interface AvailabilityRepository extends JpaRepository<EmployeeAvailability, Long> {
-
-    Optional<EmployeeAvailability> findByEmployee_IdAndAvailableDate(Long employeeId, LocalDate date);
-
+public interface AvailabilityRepository extends JpaRepository<EmployeeAvailability,Long> {
+    Optional<EmployeeAvailability> findByEmployee_IdAndAvailableDate(Long id, LocalDate date);
     List<EmployeeAvailability> findByAvailableDateAndAvailable(LocalDate date, boolean available);
-
-    List<EmployeeAvailability> findByEmployee_Id(Long employeeId);
+    List<EmployeeAvailability> findByEmployee_Id(Long id);
 }
