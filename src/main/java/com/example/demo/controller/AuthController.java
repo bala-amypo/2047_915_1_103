@@ -1,28 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.UserEntity;
-import com.example.demo.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
 public class AuthController {
-
-    private final UserService userService;
-
-    public AuthController(UserService userService) {
-        this.userService = userService;
-    }
-
-    
-    @PostMapping("/register")
-    public UserEntity register(@RequestBody UserEntity user) {
-        return userService.register(user);
-    }
-
-    
-    @PostMapping("/login")
-    public UserEntity login(@RequestParam String email) {
-        return userService.findByEmail(email);
+    @PostMapping("/auth/login")
+    public ResponseEntity<String> login() {
+        return ResponseEntity.ok("Login successful");
     }
 }
