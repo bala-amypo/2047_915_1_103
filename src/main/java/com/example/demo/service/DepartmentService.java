@@ -1,12 +1,11 @@
 package com.example.demo.service;
 
-import com.example.demo.model.DepartmentEntity;
-
+import com.example.demo.model.Department;
 import java.util.List;
 
 public interface DepartmentService {
-    DepartmentEntity create(DepartmentEntity department);
-    DepartmentEntity get(Long id);
-    List<DepartmentEntity> getAll();
+    Department create(Department department);
+    Department get(Long id);
     void delete(Long id);
+    List<Department> getAll();
 }

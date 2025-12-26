@@ -1,19 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.model.EmployeeAvailabilityEntity;
-
+import com.example.demo.model.EmployeeAvailability;
 import java.time.LocalDate;
 import java.util.List;
 
 public interface AvailabilityService {
-
-
-    EmployeeAvailabilityEntity create(
-            Long employeeId,
-            EmployeeAvailabilityEntity availability
-    );
-
-    List<EmployeeAvailabilityEntity> getByEmployee(Long employeeId);
-
-    List<EmployeeAvailabilityEntity> getByDate(LocalDate date);
+    EmployeeAvailability create(EmployeeAvailability availability);
+    EmployeeAvailability update(Long id, EmployeeAvailability availability);
+    void delete(Long id);
+    List<EmployeeAvailability> getByDate(LocalDate date);
 }
